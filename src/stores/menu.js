@@ -11,12 +11,12 @@ import { useLoginStore } from '@/stores/login';
 
 export const useMenuStore = defineStore('menustore', () => {
   const menulist = ref(null)
-  const mentflag = ref(false)
+  const menuflag = ref(false)
   const userInfo = useLoginStore()
   const { logininfo } = storeToRefs(userInfo)
   async function menuInfoClean() {
     menulist.value = null
-    mentflag.value = false
+    menuflag.value = false
   }
   async function getmenulist(){
     if(logininfo.value.authtoken && logininfo.value.usertype === 0){
@@ -69,9 +69,9 @@ export const useMenuStore = defineStore('menustore', () => {
     }
   }
   async function changeMenuFlag(){
-    mentflag.value = !mentflag.value
+    menuflag.value = !menuflag.value
   }
-  return { menulist, mentflag, getmenulist, changeMenuFlag, menuInfoClean }
+  return { menulist, menuflag, getmenulist, changeMenuFlag, menuInfoClean }
 }, {
   persist: {
     pick: ['menulist'],

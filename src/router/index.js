@@ -74,9 +74,6 @@ const dynamicRoutes = [
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (About.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import('@/views/about/About.vue'),
     meta: {
       title: '关于',
@@ -124,16 +121,16 @@ const removeRoutesFn = () => {
 
 router.beforeEach(async (to, from, next) => {
   const menuData = useMenuStore()
-  const { menulist, mentflag } = storeToRefs(menuData)
+  const { menulist, menuflag } = storeToRefs(menuData)
   const userInfo = useLoginStore()
   const { logininfo } = storeToRefs(userInfo)
   if(logininfo.value && logininfo.value.authtoken){
-    if(logininfo.value.usertype === 0 && !mentflag.value){
+    if(logininfo.value.usertype === 0 && !menuflag.value){
       addRoutesFn()
       await menuData.changeMenuFlag()
       next({ ...to, replace: true })
     }
-    else if(logininfo.value.usertype === 1 && !mentflag.value){
+    else if(logininfo.value.usertype === 1 && !menuflag.value){
       await menuData.changeMenuFlag()
       next({ ...to, replace: true })
     }
