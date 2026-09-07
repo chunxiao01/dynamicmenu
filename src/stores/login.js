@@ -19,7 +19,16 @@ export const useLoginStore = defineStore('loginstore', () => {
     logininfo.value.usertype = data.usertype
     logininfo.value.authtoken = data.authtoken
   }
-  return { logininfo, getlogininfo, logininfoclean }
+  async function logout() {
+    // 1. 调用后端登出接口 (可选)
+    // 2. 清理本地 token 和 store 数据
+    this.logininfo = null
+    // 3. 清理路由
+    removeRoutesFn()
+    // 4. 跳转
+    router.push({ name: 'login' })
+  }
+  return { logininfo, getlogininfo, logininfoclean, logout }
 }, {
     persist:{
         paths: ['logininfo'],
